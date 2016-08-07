@@ -1,8 +1,8 @@
 import React from 'react';
 var update = require('react-addons-update');
-import OpenTask from './Task.jsx';
-import InProgressTask from './InProgressTask.jsx';
-import CompletedTask from './CompletedTask.jsx';
+import OpenTask from './Components/Task.jsx';
+import InProgressTask from './Components/InProgressTask.jsx';
+import CompletedTask from './Components/CompletedTask.jsx';
 
 class CreateNewTask extends React.Component {
 	constructor(props){
@@ -200,7 +200,7 @@ class App extends React.Component {
     }
     onSortPriority() {
     	this.setState({
-    		openTaskList : this.state.unSortTaskList
+    		openTaskList : this.state.unSortOpenTaskList
     	},this.onPrio)
     }
     callB (){
@@ -221,17 +221,19 @@ class App extends React.Component {
     }
 
     onPrio() {
+        
 		var myArray = this.state.openTaskList;
     	var sortArray = [];
       
     	if(this.refs.prioopen.value=="Priority"){
+            console.log(myArray);
     		myArray.map(elem => sortArray.push(elem));
     		this.setState({
     			isClick : true
     		})
     	}
 		else {
-               
+                console.log(myArray);
 				for(var i =0 ;i<myArray.length;i++){
 	    		if(myArray[i].Priority===this.refs.prioopen.value){
 	    			sortArray.push(myArray[i]);
@@ -241,6 +243,7 @@ class App extends React.Component {
     			isClick : false
     		})
 		}
+
 		for(var i =0;i<sortArray.length;i++){
 			sortArray[i].Id = i+1;
 		}
@@ -288,6 +291,9 @@ class App extends React.Component {
       
 
     }
+    preventDefault(event) {
+        event.preventDefault();
+    }
     render(){
     	
         var component = this;
@@ -308,10 +314,10 @@ class App extends React.Component {
         });
         return(
             <div id="tododiv">
-                <div id="centerImage"><img src="rohittodo.png"></img></div><br/><br/>
+                <div id="centerImage"><img src="./Images/rohittodo.png"></img></div><br/><br/>
                 <div id="CompleteDiv">
                     <div id="openDiv">
-                        <img  src="open.png"></img>
+                        <img  src="./Images/open.png"></img>
                          <table >
                            <tbody>
                             <tr id="firstopenrow" ><td style={{"width":"40px"}}>S.No</td><td>Title</td><td>Description</td><td style={{"width":"70px"}}><select id="sortOnPrio" onChange={this.onSortPriority.bind(this)} ref="prioopen" style={{"color":"white"}}><option>Priority</option><option>P0</option><option>P1</option><option>P2</option><option>P3</option></select></td><td>Actions</td></tr>
@@ -320,8 +326,8 @@ class App extends React.Component {
                         </table><br/>
                         <CreateNewTask isClickable={this.state.isClick} createFirstT={this.createFirstTask.bind(this)}/>
                     </div>
-                    <div id="inProgressDiv"  onDragOver={this.onDropInProgress.bind(this)}>
-                        <img  src="inprogress.png"></img>
+                    <div id="inProgressDiv" onDragOver={this.preventDefault} onDrop={this.onDropInProgress.bind(this)}>
+                        <img  src="./Images/inprogress.png"></img>
                         <table >
                           <tbody>
                             <tr id="firstprogressrow"><td style={{"width":"40px"}}>S.No</td><td>Title</td><td>Description</td><td style={{"width":"70px"}}><select id="sortOnPrio" onChange={this.onSortPriority.bind(this)} ref="prioinprogress" style={{"color":"white"}}><option>Priority</option><option>P0</option><option>P1</option><option>P2</option><option>P3</option></select></td><td>Actions</td></tr>
@@ -329,8 +335,8 @@ class App extends React.Component {
                           </tbody>
                         </table> 
                     </div>
-                    <div id="completedDiv" onDragOver={this.onDropCompleted.bind(this)}>
-                        <img  src="completed.png"></img>
+                    <div id="completedDiv" onDragOver={this.preventDefault} onDrop={this.onDropCompleted.bind(this)}>
+                        <img  src="./Images/completed.png"></img>
                         <table>
                            <tbody>
                              <tr id="firstcompleterow"><td style={{"width":"40px"}}>S.No</td><td>Title</td><td>Description</td><td style={{"width":"70px"}}><select id="sortOnPrio" onChange={this.onSortPriority.bind(this)} ref="priocomplete" style={{"color":"white"}}><option>Priority</option><option>P0</option><option>P1</option><option>P2</option><option>P3</option></select></td><td>Actions</td></tr>

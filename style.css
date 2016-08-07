@@ -3,6 +3,7 @@ table, th, td {
 }
 html {
 	-webkit-background-size: cover;
+	background-size: cover;
 }
 
 #home-div {
@@ -74,6 +75,7 @@ select {
 #openDiv{
 	text-align: left;
 	width: 33%;
+	margin-left: 35px;
 }
 
 #inProgressDiv {
